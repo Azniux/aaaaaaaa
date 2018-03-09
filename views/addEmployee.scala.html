@@ -1,0 +1,36 @@
+@(employeeForm: Form[models.Employee], user: models.users.User)
+@import helper._
+
+@main("Add Employee",user) {
+    <p class="lead">Add a new employee</p>
+    @form(action=routes.HomeController.addEmployeeSubmit(), 
+    'class -> "form-horizontal", 
+    'role -> "form", 
+    'enctype -> "multipart/form-data") {
+        @* CSRF attack prevention *@
+        @CSRF.formField
+
+        @inputText(employeeForm("name"), '_label -> "Name", 'class -> "form-control")
+        @select(
+            employeeForm("department.id"),
+            options(Department.options),
+            '_label -> "Department", '_default -> "-- Choose a department --",
+            '_showConstraints -> false, 'class -> "form-control"
+        )
+        @inputText(employeeForm("description"), '_label -> "Description", 'class -> "form-control")
+        @inputText(employeeForm("stock"), '_label -> "Stock", 'class -> "form-control")
+        @inputText(employeeForm("price"), '_label -> "Price", 'class -> "form-control")
+
+        @inputText(employeeForm("id"), '_label -> "", 'hidden -> "hidden")
+
+        <label>Image Upload</label>
+        <input class="btn-sm btn-default" type="file" name="upload">
+        <br></br>
+        <div class="actions">
+            <input type="submit" value="Add/Update Employee" class="btn btn-primary">
+            <a href="@routes.HomeController.index(0)">
+                <button type="button" class="btn btn-warning">Cancel</button>
+            </a>
+        </div>
+    }
+}

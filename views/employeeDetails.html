@@ -1,0 +1,38 @@
+@(p: models.Employee,user: models.users.User,env: play.api.Environment)
+
+@main("Full Image", user) {
+
+  <div class="col-sm-10">
+    <table class="table table-bordered table-hover table-condensed">
+      @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+          @flash.get("success")
+        </div>
+      }
+      <thead>
+        <tr>
+          <th>Image</th> 
+          <th>ID</th> 
+        </tr>
+      </thead>
+
+      <tbody>
+
+          <tr>
+              @if(env.resource("public/images/employeeImages/" + p.getId + ".jpg").isDefined) {
+                <td><img src="/assets/images/employeeImages/@(p.getId + ".jpg")"/></td>
+            } else {
+                <td><img src="/assets/images/employeeImages/noImage.jpg"/></td>
+            }
+            <td class="numeric">@p.getId</td>
+            
+          </tr>
+        
+      </tbody>
+
+    </table>
+
+    
+  </div>
+</div>
+}
